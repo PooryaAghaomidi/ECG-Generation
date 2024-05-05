@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
+Final/
+mitbih_test.csv
+mitbih_train.csv
 
 # C extensions
 *.so
