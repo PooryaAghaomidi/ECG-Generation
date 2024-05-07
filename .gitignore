@@ -1,10 +1,14 @@
+# Mine
+find . -size +100M | cat >> .gitignore
+Final/
+mitbih_test.csv
+mitbih_train.csv
+shuffled_data
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-Final/
-mitbih_test.csv
-mitbih_train.csv
 
 # C extensions
 *.so
