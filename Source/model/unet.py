@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 from model.attention import SelfAttention, CrossAttention
-from utils.time_embedder import TimeEmbedding
+from scheduler.time_embedder import TimeEmbedding
 
 
 class UNET_ResidualBlock(nn.Module):

@@ -4,6 +4,7 @@ Final/
 mitbih_test.csv
 mitbih_train.csv
 shuffled_data
+v1-5-pruned.ckpt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

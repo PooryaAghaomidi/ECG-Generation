@@ -1,0 +1,16 @@
+{
+  "ALLOW_CUDA": true,
+  "ALLOW_MPS": false,
+  "tokenizier_path": "checkpoints/vocab.json",
+  "merg_path": "checkpoints/merges.txt",
+  "model_file": "checkpoints/v1-5-pruned.ckpt",
+  "sampler": "ddpm",
+  "num_inference_steps": 50,
+  "seed": 42,
+  "uncond_prompt": "",
+  "do_cfg": true,
+  "cfg_scale": 8,
+  "input_image": null,
+  "image_path": "",
+  "strength": 0.9
+}
