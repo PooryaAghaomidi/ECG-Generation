@@ -2,7 +2,7 @@
 mitbih_test.csv
 mitbih_train.csv
 Dataset.npy
-v1-5-pruned.ckpt
+main.psd
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
