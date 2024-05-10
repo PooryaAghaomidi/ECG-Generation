@@ -1,6 +1,7 @@
 import torch
-from utils import model_loader, generation
 from PIL import Image
+from utils import model_loader
+from evaluate import generation
 from transformers import CLIPTokenizer
 
 

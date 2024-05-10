@@ -1,8 +1,28 @@
 import json
 from configs.inference_config import write_inference_config
+from configs.vaetrain_config import write_vaetrain_config
 from evaluate.inference import StableDiffusion
+from train.train_autoencoder import TrainAutoencoder
 
-state = 'inference'
+state = 'train_vae'
+
+
+def train_vae(config_path):
+    write_vaetrain_config()
+    with open(config_path, 'r') as openfile:
+        my_configs = json.load(openfile)
+
+    my_class = TrainAutoencoder(device=my_configs['device'],
+                                seed=my_configs['seed'],
+                                shape=my_configs['shape'],
+                                data_path=my_configs['data_path'],
+                                my_loss=my_configs['my_loss'],
+                                my_opt=my_configs['my_opt'],
+                                lr=my_configs['lr'],
+                                batch_size=my_configs['batch_size'],
+                                epoch=my_configs['epoch'],
+                                saved_path=my_configs['saved_path'])
+    my_class.training()
 
 
 def stable_diffusion_inference(prompt, config_path):
@@ -28,13 +48,20 @@ def stable_diffusion_inference(prompt, config_path):
     return my_class.generate_image(prompt)
 
 
+# TODO: 1. Display training information
+#       2. Complete VAE training with classification
+#       3. Train diffusion model
+
 if __name__ == "__main__":
     if state == 'inference':
         my_prompt = 'a beautiful dog'
         my_config_path = 'configs/inference_configs.json'
         image = stable_diffusion_inference(my_prompt, my_config_path)
         image.show()
-    elif state == 'train':
+    elif state == 'train_vae':
+        my_config_path = 'configs/vaetrain_configs.json'
+        train_vae(my_config_path)
+    elif state == 'train_diff':
         pass
     else:
         raise ValueError('There are only two states of inference and train')

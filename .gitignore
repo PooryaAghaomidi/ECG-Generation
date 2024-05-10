@@ -1,9 +1,7 @@
 # Mine
-find . -size +100M | cat >> .gitignore
-Final/
 mitbih_test.csv
 mitbih_train.csv
-shuffled_data
+Dataset.npy
 v1-5-pruned.ckpt
 
 # Byte-compiled / optimized / DLL files
