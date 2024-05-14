@@ -44,4 +44,4 @@ class VAE_Encoder(nn.Sequential):
         stdev = variance.sqrt()
         x = mean + stdev * noise
         x *= 0.18215
-        return x
+        return mean, stdev, x

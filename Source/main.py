@@ -16,12 +16,13 @@ def train_vae(config_path):
                                 seed=my_configs['seed'],
                                 shape=my_configs['shape'],
                                 data_path=my_configs['data_path'],
-                                my_loss=my_configs['my_loss'],
+                                los=my_configs['los'],
                                 my_opt=my_configs['my_opt'],
                                 lr=my_configs['lr'],
                                 batch_size=my_configs['batch_size'],
                                 epoch=my_configs['epoch'],
-                                saved_path=my_configs['saved_path'])
+                                saved_path=my_configs['saved_path'],
+                                weight=my_configs['weight'])
     my_class.training()
 
 

@@ -1,21 +1,26 @@
 import torch
 from torch import nn
+from torch.nn import functional as F
 
 
 class VAEModel(nn.Module):
-    def __init__(self, encoder, decoder, shape, device, generator):
+    def __init__(self, encoder, decoder, fully_connected, shape, device, generator):
         super(VAEModel, self).__init__()
         self.device = device
         self.shape = shape
         self.generator = generator
         self.encoder = encoder
         self.decoder = decoder
+        self.fully_connected = fully_connected
 
     def forward(self, x):
         latents_shape = (1, 4, self.shape[1] // 8, self.shape[2] // 8)
         encoder_noise = torch.randn(latents_shape, generator=self.generator, device=self.device)
 
-        z = self.encoder(x, encoder_noise)
-        y = self.decoder(z)
+        mean, stdev, z = self.encoder(x, encoder_noise)
 
-        return y
+        y2 = self.decoder(z)
+
+        y1 = self.fully_connected(y2)
+
+        return [mean, stdev, y1, y2]
