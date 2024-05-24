@@ -1,7 +1,7 @@
 import json
 
 
-def write_inference_config():
+def write_difftrain_config():
     my_config = {'device': 'gpu',
                  'seed': 42,
                  'shape': (2, 128, 128),

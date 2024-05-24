@@ -1,20 +1,18 @@
 import torch
 import numpy as np
-import matplotlib.pyplot as plt
+from loss import MSE
 from tqdm import tqdm
 from model.clip import CLIP
 from datetime import datetime
 from model.vae import VAEModel
 from utils import model_converter
 from optimizer.Adam import adam_opt
-from torch.nn import functional as F
-from loss import diffusion_loss, MSE
 from model.unet import DiffusionModel
 from model.encoder import VAE_Encoder
 from model.decoder import VAE_Decoder
 from transformers import CLIPTokenizer
 from scheduler.sampler import DDPMSampler
-from ssqueezepy import ssq_stft, issq_stft
+from ssqueezepy import ssq_stft
 from torch.utils.tensorboard import SummaryWriter
 
 

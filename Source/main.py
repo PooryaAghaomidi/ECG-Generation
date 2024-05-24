@@ -1,10 +1,37 @@
 import json
 from configs.inference_config import write_inference_config
 from configs.vaetrain_config import write_vaetrain_config
+from configs.difftrain_config import write_difftrain_config
 from evaluate.inference import StableDiffusion
 from train.train_autoencoder import TrainAutoencoder
+from train.train_diffusion import TrainDiffusion
 
-state = 'train_vae'
+state = 'train_diff'
+
+
+def train_diffusion(config_path):
+    write_difftrain_config()
+    with open(config_path, 'r') as openfile:
+        my_configs = json.load(openfile)
+
+    my_class = TrainDiffusion(device=my_configs['device'],
+                              seed=my_configs['seed'],
+                              shape=my_configs['shape'],
+                              data_path=my_configs['data_path'],
+                              los=my_configs['los'],
+                              my_opt=my_configs['my_opt'],
+                              lr=my_configs['lr'],
+                              batch_size=my_configs['batch_size'],
+                              epoch=my_configs['epoch'],
+                              saved_path=my_configs['saved_path'],
+                              ckpt_path=my_configs['ckpt_path'],
+                              vae_path=my_configs['vae_path'],
+                              tokenizier_path=my_configs['tokenizier_path'],
+                              merg_path=my_configs['merg_path'],
+                              weight=my_configs['weight'],
+                              steps=my_configs['steps'],
+                              sampler_name=my_configs['sampler_name'])
+    my_class.train_diffusion_model()
 
 
 def train_vae(config_path):
@@ -49,10 +76,6 @@ def stable_diffusion_inference(prompt, config_path):
     return my_class.generate_image(prompt)
 
 
-# TODO: 1. Display training information
-#       2. Complete VAE training with classification
-#       3. Train diffusion model
-
 if __name__ == "__main__":
     if state == 'inference':
         my_prompt = 'a beautiful dog'
@@ -63,6 +86,7 @@ if __name__ == "__main__":
         my_config_path = 'configs/vaetrain_configs.json'
         train_vae(my_config_path)
     elif state == 'train_diff':
-        pass
+        my_config_path = 'configs/difftrain_configs.json'
+        train_diffusion(my_config_path)
     else:
-        raise ValueError('There are only two states of inference and train')
+        raise ValueError('Invalid state')
