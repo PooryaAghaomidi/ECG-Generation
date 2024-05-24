@@ -2,7 +2,8 @@ import torch
 import numpy as np
 from tqdm import tqdm
 from datetime import datetime
-from ssqueezepy import ssq_stft
+import matplotlib.pyplot as plt
+from ssqueezepy import ssq_stft, issq_stft
 from torch.nn import functional as F
 from optimizer.Adam import adam_opt
 from model.vae import VAEModel
@@ -11,8 +12,6 @@ from model.decoder import VAE_Decoder
 from model.fconnected import Fully_connected
 from torch.utils.tensorboard import SummaryWriter
 from loss import reconstruction_loss, classification_loss, MSE
-
-# torch.autograd.set_detect_anomaly(True)
 
 
 class TrainAutoencoder:
@@ -130,7 +129,7 @@ class TrainAutoencoder:
                     start = i * self.batch_size
                     Vbatch = self.val[start:start + self.batch_size, :128]
                     c_vlabels = self.val[start:start + self.batch_size, 128]
-                    c_vlabels = F.one_hot(torch.tensor(c_vlabels, dtype=torch.float32, device=self.device),
+                    c_vlabels = F.one_hot(torch.tensor(c_vlabels, dtype=torch.int64, device=self.device),
                                           num_classes=5).float()
 
                     vinputs = np.empty((self.batch_size, *self.shape))
@@ -151,6 +150,13 @@ class TrainAutoencoder:
                     _, predicted_output = torch.max(voutput_c, 1)
                     _, predicted_target = torch.max(c_vlabels, 1)
                     running_vacc += (predicted_output == predicted_target).sum().item()
+
+                    if i == 200:
+                        my_img = voutput_r[0, 0] + voutput_r[0, 1] * 1j
+                        my_sig = issq_stft(my_img)
+                        plt.plot(my_sig)
+
+                        self.writer.add_figure('reconstructed_image_in_epoch_' + str(epoch_number), plt.gcf())
 
             avg_vloss = running_vloss / (i + 1)
             avg_vacc = running_vacc / (i + 1)

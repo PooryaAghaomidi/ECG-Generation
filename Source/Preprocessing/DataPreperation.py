@@ -32,23 +32,24 @@ rdm = np.random.randint(100, size=(128))
 rdm = 0.1 * ((rdm - rdm.min()) / (rdm.max() - rdm.min()))
 
 counter = 0
-My_data = np.empty((200000, 129))
+# My_data = np.empty((200000, 129))
+Clean_data = np.empty((100000, 129))
 
 for i in tqdm(range(len(train_df))):
     row = train_df.iloc[i]
     My_signal = row[5:133]
     My_class = int(row[187])
 
-    My_data[counter, :128] = np.array(My_signal)
-    My_data[counter, 128] = My_class
+    Clean_data[counter, :128] = np.array(My_signal)
+    Clean_data[counter, 128] = My_class
     counter = counter + 1
 
-    start = random.randint(0, 640000)
-    noisy_sample = np.array(My_signal + bwm[start:start + 128] + emm[start:start + 128] + mam[start:start + 128] + rdm)
+    # start = random.randint(0, 640000)
+    # noisy_sample = np.array(My_signal + bwm[start:start + 128] + emm[start:start + 128] + mam[start:start + 128] + rdm)
 
-    My_data[counter, :128] = noisy_sample
-    My_data[counter, 128] = My_class
-    counter = counter + 1
+    # My_data[counter, :128] = noisy_sample
+    # My_data[counter, 128] = My_class
+    # counter = counter + 1
 
-np.random.shuffle(My_data)
-np.save(address + 'Dataset.npy', My_data)
+np.random.shuffle(Clean_data)
+np.save(address + 'CleanDataset.npy', Clean_data)
